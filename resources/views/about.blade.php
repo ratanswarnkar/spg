@@ -98,7 +98,7 @@
                     <p><i class="fa fa-check-circle text-primary me-3"></i>MNRE & International Standards Compliance</p>
                     <p><i class="fa fa-check-circle text-primary me-3"></i>On-Time Manufacturing & Delivery</p>
 
-                    <a href="/about" class="btn btn-primary rounded-pill py-3 px-5 mt-3">
+                    <a href="/projects" class="btn btn-primary rounded-pill py-3 px-5 mt-3">
                         Explore More
                     </a>
                 </div>

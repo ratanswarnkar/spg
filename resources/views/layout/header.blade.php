@@ -81,13 +81,35 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="{{ asset('/')}}" class="nav-item nav-link active">Home</a>
-            <a href="{{ asset('about')}}" class="nav-item nav-link">About</a>
-            <a href="{{ asset('/services')}}" class="nav-item nav-link">Service</a>
-            <a href="{{ asset('projects')}}" class="nav-item nav-link">Project</a>
-            <a href="{{ asset('contact')}}" class="nav-item nav-link">Contact</a>
-        </div>
+       <div class="navbar-nav ms-auto p-4 p-lg-0">
+
+    <a href="{{ url('/') }}"
+       class="nav-item nav-link {{ request()->is('/') ? 'active' : '' }}">
+        Home
+    </a>
+
+    <a href="{{ url('about') }}"
+       class="nav-item nav-link {{ request()->is('about') ? 'active' : '' }}">
+        About
+    </a>
+
+    <a href="{{ url('services') }}"
+       class="nav-item nav-link {{ request()->is('services*') ? 'active' : '' }}">
+        Service
+    </a>
+
+    <a href="{{ url('projects') }}"
+       class="nav-item nav-link {{ request()->is('projects*') ? 'active' : '' }}">
+        Project
+    </a>
+
+    <a href="{{ url('contact') }}"
+       class="nav-item nav-link {{ request()->is('contact') ? 'active' : '' }}">
+        Contact
+    </a>
+
+</div>
+
         <a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block"><i></i></a>
     </div>
 </nav>
@@ -120,9 +142,12 @@
   #chatbot-btn img:hover {
     transform: scale(1.1);
   }
-
+#chat-window {
+  background: #e9f6ee; /* light green background */
+}
   /* Chat Window */
   #chat-window {
+    
     position: fixed;
     bottom: 110px;
     left: 25px; /* ✅ Shifted to Left */
@@ -137,33 +162,49 @@
     overflow: hidden;
     z-index: 9999;
   }
+/* Chat Header */
+#chat-header {
+  background: #1e8e3e; /* dark green */
+  color: #fff;
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  position: relative;
+}
 
-  #chat-header {
-    background: #32c36c;
-    color: #fff;
-    padding: 12px;
-    text-align: center;
-    font-weight: bold;
-    border-bottom: 1px solid #27a85c;
-  }
+/* Close Button */
+#chat-close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #fff;
+  transition: 0.3s;
+}
 
-  #chat-body {
-    flex: 1;
-    padding: 12px;
-    overflow-y: auto;
-    color: #333;
-    font-size: 14px;
-    font-family: "Poppins", sans-serif;
-  }
+#chat-close:hover {
+  color: #ffdddd;
+  transform: scale(1.2);
+}
 
-  .bot-msg,
-  .user-msg {
-    margin: 8px 0;
-    padding: 10px 14px;
-    border-radius: 10px;
-    max-width: 80%;
-    line-height: 1.4;
-  }
+/* Chat Body */
+#chat-body {
+  background: #f4fff7; /* lighter green */
+}
+
+/* Bot Message */
+.bot-msg {
+  background: rgba(30, 142, 62, 0.15);
+  color: #0c7a3e;
+  border: 1px solid rgba(30, 142, 62, 0.3);
+}
+
+/* User Message */
+.user-msg {
+  background: linear-gradient(90deg, #1e8e3e, #32c36c);
+  color: #fff;
+}
 
   .bot-msg {
     background: rgba(50, 195, 108, 0.1);
@@ -226,7 +267,11 @@
 
 <!-- Chatbot Window -->
 <div id="chat-window">
-  <div id="chat-header">SPG Steel Assistant 🤖</div>
+  <div id="chat-header">
+  SPG Steel Assistant 🤖
+  <span id="chat-close">✖</span>
+</div>
+
   <div id="chat-body"></div>
 </div>
 
@@ -335,28 +380,45 @@
       }, 2000);
     }
   }
+function startChat() {
+  Swal.fire({
+    title: "Let’s Get Started 🌞",
+    html: `
+      <form id="chatStartForm">
+        <input name="name" class="swal2-input" placeholder="Your Name" required>
+        <input name="phone" class="swal2-input" placeholder="Phone Number" required type="tel">
+        <input name="email" class="swal2-input" placeholder="Email Address" required type="email">
+      </form>
+    `,
+    showCloseButton: true,          // ✅ CLOSE (❌) BUTTON
+    closeButtonHtml: '✖',           // Optional custom icon
+    confirmButtonText: "Start Chat",
+    confirmButtonColor: "#1e8e3e",  // Green button
+    cancelButtonText: "Cancel",
+    focusConfirm: false,
+    preConfirm: () => {
+      const name = document.querySelector("input[name=name]").value;
+      const phone = document.querySelector("input[name=phone]").value;
+      const email = document.querySelector("input[name=email]").value;
 
-  function startChat() {
-    Swal.fire({
-      title: "Let’s Get Started 🌞",
-      html: `
-        <form id="chatStartForm">
-          <input name="name" class="swal2-input" placeholder="Your Name" required>
-          <input name="phone" class="swal2-input" placeholder="Phone Number" required type="tel">
-          <input name="email" class="swal2-input" placeholder="Email Address" required type="email">
-        </form>`,
-      confirmButtonText: "Start Chat",
-      preConfirm: () => {
-        formData.name = document.querySelector("input[name=name]").value;
-        formData.phone = document.querySelector("input[name=phone]").value;
-        formData.email = document.querySelector("input[name=email]").value;
+      if (!name || !phone || !email) {
+        Swal.showValidationMessage("Please fill all fields");
+        return false;
       }
-    }).then(() => {
+
+      formData.name = name;
+      formData.phone = phone;
+      formData.email = email;
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
       chatWindow.style.display = "flex";
       botMessage(`Hello ${formData.name}! 👋`);
       setTimeout(nextQuestion, 700);
-    });
-  }
+    }
+  });
+}
+
 
   function sendDataToFormspree() {
     fetch("https://formspree.io/f/xdfgdsfn", { // ✅ Updated Formspree ID
@@ -367,5 +429,12 @@
   }
 
   chatBtn.addEventListener("click", startChat);
+</script>
+<script>
+  document.addEventListener("click", function (e) {
+    if (e.target.id === "chat-close") {
+      chatWindow.style.display = "none";
+    }
+  });
 </script>
 
