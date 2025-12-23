@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a class="text-white" href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                    <!-- <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li> -->
                     <li class="breadcrumb-item text-white active" aria-current="/services">Services</li>
                 </ol>
             </nav>

@@ -74,7 +74,7 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-    <a href="index.html" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
+    <a href="/" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
         <img src="img/logo.png" alt="SPG STEAL Logo" style="height:64px; width:94px;">
     </a>
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
