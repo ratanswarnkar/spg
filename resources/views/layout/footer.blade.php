@@ -5,7 +5,7 @@
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-white mb-4">Address</h5>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Greator Noida, Uttar Pradesh</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 9983578018</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 9555872224</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@spgsteel.com</p>
                     <div class="d-flex pt-2">
                         <a class="btn btn-square btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
